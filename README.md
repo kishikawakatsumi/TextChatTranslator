@@ -7,3 +7,9 @@ https://github.com/kishikawakatsumi/TextChatTranslator/assets/40610/01e8104d-9a8
 ## Features
 
 - Translate text messages in real-time
+
+## Todo
+
+- [x] Discord chat
+- [ ] Discord forum
+- [ ] Slack chat
