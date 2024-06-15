@@ -13,7 +13,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   private var overlays = [NSWindow]()
 
   private var application: AXUIElement?
-  private var currentMessages = [AXUIElement]()
+
+  private var firstMessagePosition: CGPoint = .zero
+  private var currentMessages = [AXUIElement]() {
+    didSet {
+      firstMessagePosition = currentMessages.first?.frame?.origin ?? .zero
+    }
+  }
 
   private var isTranslationEnabled = false {
     didSet {
@@ -76,7 +82,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
           application = AXUIElementCreateApplication(app.processIdentifier)
         } else {
           application = nil
-          isTranslationEnabled = false
+          await MainActor.run {
+            isTranslationEnabled = false
+          }
         }
       }
     }
@@ -87,9 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
       guard let _ = self.application else { return }
 
       if !self.currentMessages.isEmpty {
-        let messages = self.fetchVisibleMessages()
-
-        if self.currentMessages.first?.frame != messages.first?.frame {
+        if self.firstMessagePosition.y != self.currentMessages.first?.frame?.origin.y {
           self.closeAllOverlays()
         }
       }
@@ -141,13 +147,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   }
 
   private func closeAllOverlays() {
-    DispatchQueue.main.async {
-      for overlay in self.overlays {
-        overlay.close()
-      }
-      self.overlays = []
-      self.currentMessages = []
+    for overlay in self.overlays {
+      overlay.close()
     }
+    self.overlays = []
+    self.currentMessages = []
   }
 
   private func fetchVisibleMessages() -> [AXUIElement] {
@@ -165,6 +169,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
               let messageContainer = row
               let messageGroup = messageContainer.children
                 .filter { $0.roleDescription != "heading" && $0.roleDescription != "time" }
+                .filter { $0.children.allSatisfy { $0.roleDescription != "article" } }
               for message in messageGroup {
                 if let frame = message.frame, frame.height > 1.0 {
                   messages.append(message)
