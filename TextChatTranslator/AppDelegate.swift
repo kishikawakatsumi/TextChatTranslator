@@ -5,7 +5,10 @@ private let debounce = Debounce(delay: 0.2)
 @main
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-  private let translationMenuItem = NSMenuItem(title: "Start Translation", action: #selector(toggleTranslationEnabled), keyEquivalent: "")
+  private let translationMenuItem = NSMenuItem(
+    title: NSLocalizedString("Start Translation", comment: ""),
+    action: #selector(toggleTranslationEnabled), keyEquivalent: ""
+  )
 
   private var overlays = [NSWindow]()
 
@@ -16,10 +19,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     didSet {
       if isTranslationEnabled {
         translateMessages()
-        translationMenuItem.title = "Stop Translation"
+        translationMenuItem.title = NSLocalizedString("Stop Translation", comment: "")
+        translationMenuItem.state = .on
       } else {
         closeAllOverlays()
-        translationMenuItem.title = "Start Translation"
+        translationMenuItem.title = NSLocalizedString("Start Translation", comment: "")
+        translationMenuItem.state = .off
       }
     }
   }
@@ -30,10 +35,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     let menu = NSMenu()
 
     translationMenuItem.image = NSImage(named: "discord")
+    translationMenuItem.onStateImage = NSImage(named: NSImage.statusAvailableName)
+    translationMenuItem.offStateImage = NSImage(named: NSImage.statusNoneName)
     menu.addItem(translationMenuItem)
 
     menu.addItem(NSMenuItem.separator())
-    menu.addItem(NSMenuItem(title: "Quit Text Chat Translator", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+    menu.addItem(NSMenuItem(
+      title: NSLocalizedString("Quit Text Chat Translator", comment: ""),
+      action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+    )
 
     statusItem.menu = menu
 

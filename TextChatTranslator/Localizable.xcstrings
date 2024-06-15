@@ -1,0 +1,36 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Quit Text Chat Translator" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text Chat Translatorを終了"
+          }
+        }
+      }
+    },
+    "Start Translation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻訳を開始"
+          }
+        }
+      }
+    },
+    "Stop Translation" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻訳を停止"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
