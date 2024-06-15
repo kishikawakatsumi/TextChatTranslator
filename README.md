@@ -1,3 +1,3 @@
 # TextChatTranslator
 
-https://github.com/kishikawakatsumi/TextChatTranslator/assets/40610/77c62665-7f68-45ad-b285-113f00225aa2
+https://github.com/kishikawakatsumi/TextChatTranslator/assets/40610/01e8104d-9a85-459c-8569-d2f5ebab6dc8
