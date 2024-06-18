@@ -61,10 +61,10 @@
 			isa = PBXGroup;
 			children = (
 				14C3D6582C1D86B000A24281 /* AppDelegate.swift */,
-				14C3D6682C1D872600A24281 /* AXUIElement.swift */,
-				14C3D6692C1D872600A24281 /* Debounce.swift */,
 				14C3D6672C1D872600A24281 /* OverlayWindow.swift */,
 				14C3D66A2C1D872600A24281 /* Translation.swift */,
+				14C3D6682C1D872600A24281 /* AXUIElement.swift */,
+				14C3D6692C1D872600A24281 /* Debounce.swift */,
 				14C3D65C2C1D86B200A24281 /* Assets.xcassets */,
 				14C3D65E2C1D86B200A24281 /* Main.storyboard */,
 				14C3D6612C1D86B200A24281 /* TextChatTranslator.entitlements */,
