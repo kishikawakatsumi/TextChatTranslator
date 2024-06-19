@@ -161,7 +161,7 @@ extension AXUIElement {
   }
 }
 
-extension AXError: Error {}
+extension AXError: @retroactive Error {}
 
 private func cocoaScreenPointFromCarbonScreenPoint(_ carbonPoint: CGPoint) -> CGPoint {
   CGPoint(x: carbonPoint.x, y: NSScreen.screens[0].frame.size.height - carbonPoint.y)

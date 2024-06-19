@@ -1,4 +1,5 @@
 import AppKit
+import SwiftUI
 
 class OverlayWindow: NSPanel {
   var text: String {
@@ -81,6 +82,10 @@ fileprivate class OverlayContentView: NSView {
       adjustFontSizeToFit()
     }
   }
+
+  @AppStorage("backgroundColor") private var backgroundColor = Color.white
+  @AppStorage("textColor") private var textColor = Color.black
+
   private let textLabel = NSTextField(wrappingLabelWithString: "")
   private let defaultFont: NSFont = .systemFont(ofSize: 16)
   var leadingMargin: CGFloat = 0 {
@@ -95,7 +100,7 @@ fileprivate class OverlayContentView: NSView {
 
     let containerView = NSView()
     containerView.wantsLayer = true
-    containerView.layer?.backgroundColor = .white
+    containerView.layer?.backgroundColor = backgroundColor.cgColor
 
     containerView.translatesAutoresizingMaskIntoConstraints = false
     addSubview(containerView)
@@ -112,6 +117,7 @@ fileprivate class OverlayContentView: NSView {
     textLabel.translatesAutoresizingMaskIntoConstraints = true
     containerView.addSubview(textLabel)
 
+    textLabel.textColor = NSColor(textColor)
     textLabel.font = defaultFont
     textLabel.backgroundColor = .clear
     textLabel.drawsBackground = false
