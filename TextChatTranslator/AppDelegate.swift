@@ -1,15 +1,44 @@
 import Cocoa
+import Translation
 
 private let debounce = Debounce(delay: 0.2)
 
-@main
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
-  private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+  var translationSession: TranslationSession? {
+    didSet {
+      guard let _ = translationSession else { return }
+      guard mainWindow == nil else { return }
+      for window in NSApp.windows {
+        if window.className == "SwiftUI.AppKitWindow" {
+          window.titleVisibility = .hidden
+          window.titlebarAppearsTransparent = true
+
+          window.hasShadow = false
+
+          window.standardWindowButton(.closeButton)?.isHidden = true
+          window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+          window.standardWindowButton(.zoomButton)?.isHidden = true
+          window.ignoresMouseEvents = true
+
+          window.isOpaque = false
+          window.backgroundColor = .clear
+
+          window.setContentSize(.zero)
+          window.setFrameOrigin(.zero)
+
+          mainWindow = window
+        }
+      }
+    }
+  }
+
+  private lazy var statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
   private let translationMenuItem = NSMenuItem(
     title: NSLocalizedString("Start Translation", comment: ""),
     action: #selector(toggleTranslationEnabled), keyEquivalent: ""
   )
 
+  private var mainWindow: NSWindow?
   private var overlays = [NSWindow]()
 
   private var application: AXUIElement?
@@ -45,6 +74,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     translationMenuItem.offStateImage = NSImage(named: NSImage.statusNoneName)
     menu.addItem(translationMenuItem)
 
+    menu.addItem(NSMenuItem.separator())
+    menu.addItem(NSMenuItem(
+      title: NSLocalizedString("Settings…", comment: ""),
+      action: #selector(openSettings), keyEquivalent: ",")
+    )
+    
     menu.addItem(NSMenuItem.separator())
     menu.addItem(NSMenuItem(
       title: NSLocalizedString("Quit Text Chat Translator", comment: ""),
@@ -110,6 +145,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     isTranslationEnabled.toggle()
   }
 
+  @objc
+  private func openSettings() {
+    let openSettings = OpenSettings()
+    openSettings.openSettings()
+    NSApp.activate()
+  }
+
   private func translateMessages() {
     guard isTranslationEnabled else {
       return
@@ -131,7 +173,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
           let t = text
           Task { @MainActor in
-            overlayWindow.text = try await translate(text: t)
+            if let translationSession {
+              overlayWindow.text = try await translate(
+                session: translationSession,
+                text: t
+              )
+            }
           }
 
           overlayWindow.setFrameOrigin(frame.origin)
