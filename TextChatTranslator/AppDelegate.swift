@@ -120,7 +120,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
       for message in messages {
         var text = ""
-        concatMessageText(in: message, text: &text)
+        var minX = CGFloat.greatestFiniteMagnitude
+        concatMessageText(in: message, text: &text, minX: &minX)
 
         if text.isEmpty {
           continue
@@ -128,6 +129,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
         if let frame = message.frame {
           let overlayWindow = OverlayWindow()
+          overlayWindow.leadingMargin = minX - frame.minX
 
           let t = text
           Task { @MainActor in
@@ -198,13 +200,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     return nil
   }
 
-  private func concatMessageText(in element: AXUIElement, text: inout String) {
+  private func concatMessageText(in element: AXUIElement, text: inout String, minX: inout CGFloat) {
     for message in element.children {
       if message.role == kAXStaticTextRole && message.roleDescription == "text" {
         text += message.value
+        if let frame = message.frame {
+          minX = min(frame.minX, minX)
+        }
       } else {
         if message.role == kAXGroupRole {
-          concatMessageText(in: message, text: &text)
+          concatMessageText(in: message, text: &text, minX: &minX)
         }
       }
     }

@@ -15,6 +15,20 @@ class OverlayWindow: NSPanel {
     }
   }
 
+  var leadingMargin: CGFloat {
+    get {
+      if let contentView = contentView as? OverlayContentView {
+        return contentView.leadingMargin
+      }
+      return 0
+    }
+    set {
+      if let contentView = contentView as? OverlayContentView {
+        contentView.leadingMargin = newValue
+      }
+    }
+  }
+
   init() {
     super.init(
       contentRect: .zero,
@@ -69,7 +83,12 @@ fileprivate class OverlayContentView: NSView {
   }
   private let textLabel = NSTextField(wrappingLabelWithString: "")
   private let defaultFont: NSFont = .systemFont(ofSize: 16)
-  private let leadingMargin: CGFloat = 72
+  var leadingMargin: CGFloat = 0 {
+    didSet {
+      leadingConstraint?.constant = leadingMargin
+    }
+  }
+  private var leadingConstraint: NSLayoutConstraint?
 
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
@@ -81,12 +100,14 @@ fileprivate class OverlayContentView: NSView {
     containerView.translatesAutoresizingMaskIntoConstraints = false
     addSubview(containerView)
 
+    let leadingConstraint = containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin)
     NSLayoutConstraint.activate([
       containerView.topAnchor.constraint(equalTo: topAnchor),
-      containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingMargin),
+      leadingConstraint,
       containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
       containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
     ])
+    self.leadingConstraint = leadingConstraint
 
     textLabel.translatesAutoresizingMaskIntoConstraints = true
     containerView.addSubview(textLabel)
