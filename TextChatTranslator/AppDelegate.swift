@@ -186,7 +186,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
   private func findMessageListElement(in element: AXUIElement?) -> AXUIElement? {
     for child in element?.children ?? [] {
-      if child.role == kAXGroupRole || child.role == "AXWebArea" {
+      if child.role == kAXGroupRole || child.role == kAXListRole || child.role == "AXWebArea" {
         if let messageList = findMessageListElement(in: child) {
           return messageList
         }

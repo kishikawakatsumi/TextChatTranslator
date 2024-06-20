@@ -23,6 +23,9 @@ class OverlayWindow: NSPanel {
       defer: false
     )
 
+    isFloatingPanel = true
+    level = .floating
+
     collectionBehavior.insert(.fullScreenAuxiliary)
 
     titleVisibility = .hidden
