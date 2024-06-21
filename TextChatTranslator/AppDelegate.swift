@@ -10,16 +10,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     action: #selector(toggleTranslationEnabled), keyEquivalent: ""
   )
 
+  private var translator: Translator?
   private var overlays = [NSWindow]()
-
-  private var application: AXUIElement?
-
-  private var firstMessagePosition: CGPoint = .zero
-  private var currentMessages = [AXUIElement]() {
-    didSet {
-      firstMessagePosition = currentMessages.first?.frame?.origin ?? .zero
-    }
-  }
 
   private var isTranslationEnabled = false {
     didSet {
@@ -66,7 +58,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
   func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
     if translationMenuItem === menuItem {
-      return application != nil
+      return translator != nil
     }
     return true
   }
@@ -76,15 +68,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
       let sequence = NSWorkspace.shared.notificationCenter
         .notifications(named: NSWorkspace.didActivateApplicationNotification)
       for await notification in sequence {
-        guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else { continue }
+        guard let activeApp = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else { continue }
 
-        if app.bundleIdentifier == "com.hnc.Discord" {
-          application = AXUIElementCreateApplication(app.processIdentifier)
+        if activeApp.bundleIdentifier == "com.hnc.Discord" {
+          let app = AXUIElementCreateApplication(activeApp.processIdentifier)
+          translator = DiscordTranslator(application: app)
         } else {
-          application = nil
-          await MainActor.run {
-            isTranslationEnabled = false
-          }
+          translator = nil
         }
       }
     }
@@ -92,10 +82,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     NSEvent.addGlobalMonitorForEvents(
       matching: [.any]
     ) { (event) in
-      guard let _ = self.application else { return }
+      guard let translator = self.translator else { return }
 
-      if !self.currentMessages.isEmpty {
-        if self.firstMessagePosition.y != self.currentMessages.first?.frame?.origin.y {
+      if let message = translator.messages.first {
+        if translator.scrollPosition.y != message.axElement.frame?.origin.y {
           self.closeAllOverlays()
         }
       }
@@ -115,104 +105,34 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
       return
     }
 
-    if currentMessages.isEmpty {
-      let messages = fetchVisibleMessages()
+    if let translator, overlays.isEmpty {
+      translator.perform()
 
-      for message in messages {
-        var text = ""
-        var minX = CGFloat.greatestFiniteMagnitude
-        concatMessageText(in: message, text: &text, minX: &minX)
-
-        if text.isEmpty {
+      for message in translator.messages {
+        if message.text.isEmpty {
           continue
         }
 
-        if let frame = message.frame {
-          let overlayWindow = OverlayWindow()
-          overlayWindow.leadingMargin = minX - frame.minX
+        let overlayWindow = OverlayWindow()
+        overlayWindow.leadingMargin = message.textFrame.minX - message.frame.minX
 
-          let t = text
-          Task { @MainActor in
-            overlayWindow.text = try await translate(text: t)
-          }
-
-          overlayWindow.setFrameOrigin(frame.origin)
-          overlayWindow.setContentSize(frame.size)
-
-          overlayWindow.orderFront(nil)
-
-          overlays.append(overlayWindow)
+        Task { @MainActor in
+          overlayWindow.text = try await translate(text: message.text)
         }
+
+        overlayWindow.setFrameOrigin(message.frame.origin)
+        overlayWindow.setContentSize(message.frame.size)
+
+        overlayWindow.orderFront(nil)
+
+        overlays.append(overlayWindow)
       }
-      currentMessages = messages
     }
   }
 
   private func closeAllOverlays() {
-    for overlay in self.overlays {
-      overlay.close()
-    }
-    self.overlays = []
-    self.currentMessages = []
-  }
-
-  private func fetchVisibleMessages() -> [AXUIElement] {
-    var messages = [AXUIElement]()
-
-    if let application {
-      let focusedWindow = application.focusedWindow
-
-      if let messageList = findMessageListElement(in: focusedWindow) {
-        let rowContainers = messageList.children
-          .filter { $0.role == kAXGroupRole }
-        for rowContainer in rowContainers {
-          for row in rowContainer.children {
-            if row.roleDescription == "message" {
-              let messageContainer = row
-              let messageGroup = messageContainer.children
-                .filter { $0.roleDescription != "heading" && $0.roleDescription != "time" }
-                .filter { $0.children.allSatisfy { $0.roleDescription != "article" } }
-              for message in messageGroup {
-                if let frame = message.frame, frame.height > 1.0 {
-                  messages.append(message)
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return messages
-  }
-
-  private func findMessageListElement(in element: AXUIElement?) -> AXUIElement? {
-    for child in element?.children ?? [] {
-      if child.role == kAXGroupRole || child.role == kAXListRole || child.role == "AXWebArea" {
-        if let messageList = findMessageListElement(in: child) {
-          return messageList
-        }
-      }
-      if child.roleDescription == "content list" && child.description.starts(with: "Messages") {
-        return child
-      }
-    }
-    return nil
-  }
-
-  private func concatMessageText(in element: AXUIElement, text: inout String, minX: inout CGFloat) {
-    for message in element.children {
-      if message.role == kAXStaticTextRole && message.roleDescription == "text" {
-        text += message.value
-        if let frame = message.frame {
-          minX = min(frame.minX, minX)
-        }
-      } else {
-        if message.role == kAXGroupRole {
-          concatMessageText(in: message, text: &text, minX: &minX)
-        }
-      }
-    }
+    overlays.forEach { $0.close() }
+    overlays = []
   }
 
   private func waitPermisionGranted(completion: @escaping () -> Void) {
