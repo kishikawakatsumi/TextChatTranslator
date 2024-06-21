@@ -31,6 +31,7 @@ struct OpenSettings {
   @Environment(\.openSettings) var openSettings
 }
 #else
+@main
 struct TextChatTranslatorApp: App {
   var body: some Scene {
     WindowGroup {

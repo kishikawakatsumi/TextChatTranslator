@@ -4,6 +4,7 @@ import Translation
 class TranslationService {
   private let cache = NSCache<NSString, NSString>()
 
+#if canImport(Synchronization)
   @available(macOS 15.0, *)
   func translate(session: TranslationSession?, text: String) async throws -> String {
     if let translation = cache.object(forKey: NSString(string: text)) {
@@ -29,9 +30,11 @@ class TranslationService {
     }
     return text
   }
-
+#else
   func translate(text: String) async throws -> String {
     // You can implement your own translation logic here
     return text
   }
+#endif
 }
+

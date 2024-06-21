@@ -7,11 +7,18 @@ private let debounce = Debounce(delay: 0.2)
 @available(macOS 15.0, *)
 #endif
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
+#if canImport(Synchronization)
   private let menuController = MenuController(
     startTranslationAction: #selector(toggleTranslationEnabled),
     openSettingsAction: #selector(openSettings),
     quitApplicationAction: #selector(NSApplication.terminate(_:))
   )
+#else
+  private let menuController = MenuController(
+    startTranslationAction: #selector(toggleTranslationEnabled),
+    quitApplicationAction: #selector(NSApplication.terminate(_:))
+  )
+#endif
   private var overlays = [NSWindow]()
 
   private var translator: Translator?
@@ -119,12 +126,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     isTranslationEnabled.toggle()
   }
 
+#if canImport(Synchronization)
   @objc
   private func openSettings() {
     let openSettings = OpenSettings()
     openSettings.openSettings()
     NSApp.activate()
   }
+#endif
 
   private func translateMessages() {
     guard isTranslationEnabled else {
@@ -143,10 +152,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         overlayWindow.leadingMargin = message.textFrame.minX - message.frame.minX
 
         Task { @MainActor in
+#if canImport(Synchronization)
           overlayWindow.text = try await service.translate(
             session: translationSession,
             text: message.text
           )
+#else
+          overlayWindow.text = try await service.translate(
+            text: message.text
+          )
+#endif
         }
 
         overlayWindow.setFrameOrigin(message.frame.origin)

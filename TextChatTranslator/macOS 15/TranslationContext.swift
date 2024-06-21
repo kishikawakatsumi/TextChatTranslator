@@ -1,3 +1,4 @@
+#if canImport(Synchronization)
 import SwiftUI
 import Translation
 
@@ -21,3 +22,4 @@ class TranslationContext {
 extension EnvironmentValues {
   @Entry var translationContext = TranslationContext()
 }
+#endif
