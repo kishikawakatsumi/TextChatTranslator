@@ -25,9 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   private var service = TranslationService()
 
   private var mainWindow: NSWindow?
-#if canImport(Synchronization)
-  typealias TranslationSession = TranslationSession
-#else
+#if !canImport(Synchronization)
   typealias TranslationSession = AnyObject
 #endif
   var translationSession: TranslationSession? {

@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Background Color:" : {
+
+    },
+    "Install Translation" : {
+
+    },
     "Quit Text Chat Translator" : {
       "localizations" : {
         "ja" : {
@@ -12,6 +18,9 @@
       }
     },
     "Settings…" : {
+
+    },
+    "Source Language:" : {
 
     },
     "Start Translation" : {
@@ -33,6 +42,12 @@
           }
         }
       }
+    },
+    "Target Language:" : {
+
+    },
+    "Text Color:" : {
+
     }
   },
   "version" : "1.0"
