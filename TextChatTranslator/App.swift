@@ -33,9 +33,14 @@ struct OpenSettings {
 #else
 @main
 struct TextChatTranslatorApp: App {
+  @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+  
   var body: some Scene {
     WindowGroup {
       VStack {}
+        .onAppear {
+          appDelegate.translationSession = nil
+        }
     }
   }
 }

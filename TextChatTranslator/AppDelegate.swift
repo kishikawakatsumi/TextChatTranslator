@@ -24,11 +24,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   private var translator: Translator?
   private var service = TranslationService()
 
-#if canImport(Synchronization)
   private var mainWindow: NSWindow?
+#if canImport(Synchronization)
+  typealias TranslationSession = TranslationSession
+#else
+  typealias TranslationSession = AnyObject
+#endif
   var translationSession: TranslationSession? {
     didSet {
+#if canImport(Synchronization)
       guard let _ = translationSession else { return }
+#endif
       guard mainWindow == nil else { return }
       for window in NSApp.windows {
         if window.className == "SwiftUI.AppKitWindow" {
@@ -53,7 +59,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
       }
     }
   }
-#endif
 
   private var isTranslationEnabled = false {
     didSet {

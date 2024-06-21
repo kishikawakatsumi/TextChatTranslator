@@ -70,30 +70,22 @@
 		14C3D6572C1D86B000A24281 /* TextChatTranslator */ = {
 			isa = PBXGroup;
 			children = (
+				14C4B4662C2520AA00ABDD81 /* App.swift */,
+				14C4B4682C2520C400ABDD81 /* SettingsView.swift */,
 				14C3D6582C1D86B000A24281 /* AppDelegate.swift */,
 				146440082C2511AD000C148D /* MenuController.swift */,
-				146440042C250B44000C148D /* Translator.swift */,
-				146440062C250B4E000C148D /* DiscordTranslator.swift */,
 				14C3D6672C1D872600A24281 /* OverlayWindow.swift */,
 				14C3D66A2C1D872600A24281 /* TranslationService.swift */,
+				14C4B4692C2520C400ABDD81 /* TranslationContext.swift */,
+				146440042C250B44000C148D /* Translator.swift */,
+				146440062C250B4E000C148D /* DiscordTranslator.swift */,
 				14C3D6682C1D872600A24281 /* AXUIElement.swift */,
 				14C3D6692C1D872600A24281 /* Debounce.swift */,
-				14C4B46C2C2520D000ABDD81 /* macOS 15 */,
 				14C3D65C2C1D86B200A24281 /* Assets.xcassets */,
 				14C3D6612C1D86B200A24281 /* TextChatTranslator.entitlements */,
 				14C3D66F2C1DEFAA00A24281 /* Localizable.xcstrings */,
 			);
 			path = TextChatTranslator;
-			sourceTree = "<group>";
-		};
-		14C4B46C2C2520D000ABDD81 /* macOS 15 */ = {
-			isa = PBXGroup;
-			children = (
-				14C4B4662C2520AA00ABDD81 /* App.swift */,
-				14C4B4682C2520C400ABDD81 /* SettingsView.swift */,
-				14C4B4692C2520C400ABDD81 /* TranslationContext.swift */,
-			);
-			path = "macOS 15";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
