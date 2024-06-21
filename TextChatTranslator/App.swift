@@ -1,6 +1,6 @@
 import SwiftUI
 
-#if canImport(Synchronization)
+#if compiler(>=6.0)
 import Observation
 import Translation
 

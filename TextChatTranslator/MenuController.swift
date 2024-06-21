@@ -3,7 +3,7 @@ import AppKit
 
 class MenuController {
   let startTranslation: NSMenuItem
-#if canImport(Synchronization)
+#if compiler(>=6.0)
   let openSettings: NSMenuItem
 #endif
   let quitApplication: NSMenuItem
@@ -22,7 +22,7 @@ class MenuController {
     }
   }
 
-#if canImport(Synchronization)
+#if compiler(>=6.0)
   init(startTranslationAction: Selector, openSettingsAction: Selector, quitApplicationAction: Selector) {
     startTranslation = NSMenuItem(
       title: NSLocalizedString("Start Translation", comment: ""),
@@ -68,7 +68,7 @@ class MenuController {
     let menu = NSMenu()
 
     menu.addItem(startTranslation)
-#if canImport(Synchronization)
+#if compiler(>=6.0)
     menu.addItem(NSMenuItem.separator())
     menu.addItem(openSettings)
 #endif

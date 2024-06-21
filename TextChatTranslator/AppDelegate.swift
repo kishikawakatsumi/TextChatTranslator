@@ -3,11 +3,11 @@ import Translation
 
 private let debounce = Debounce(delay: 0.2)
 
-#if canImport(Synchronization)
+#if compiler(>=6.0)
 @available(macOS 15.0, *)
 #endif
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
-#if canImport(Synchronization)
+#if compiler(>=6.0)
   private let menuController = MenuController(
     startTranslationAction: #selector(toggleTranslationEnabled),
     openSettingsAction: #selector(openSettings),
@@ -25,12 +25,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   private var service = TranslationService()
 
   private var mainWindow: NSWindow?
-#if !canImport(Synchronization)
+#if compiler(<6.0)
   typealias TranslationSession = AnyObject
 #endif
   var translationSession: TranslationSession? {
     didSet {
-#if canImport(Synchronization)
+#if compiler(>=6.0)
       guard let _ = translationSession else { return }
 #endif
       guard mainWindow == nil else { return }
@@ -129,7 +129,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     isTranslationEnabled.toggle()
   }
 
-#if canImport(Synchronization)
+#if compiler(>=6.0)
   @objc
   private func openSettings() {
     let openSettings = OpenSettings()
@@ -155,7 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         overlayWindow.leadingMargin = message.textFrame.minX - message.frame.minX
 
         Task { @MainActor in
-#if canImport(Synchronization)
+#if compiler(>=6.0)
           overlayWindow.text = try await service.translate(
             session: translationSession,
             text: message.text

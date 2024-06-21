@@ -1,5 +1,5 @@
 import SwiftUI
-#if canImport(Synchronization)
+#if compiler(>=6.0)
 import Translation
 
 @available(macOS 15, *)
