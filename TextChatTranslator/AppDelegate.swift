@@ -1,17 +1,52 @@
 import Cocoa
+import Translation
 
 private let debounce = Debounce(delay: 0.2)
 
-@main
+#if canImport(Synchronization)
+@available(macOS 15.0, *)
+#endif
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
-  private var menuController = MenuController(
+  private let menuController = MenuController(
     startTranslationAction: #selector(toggleTranslationEnabled),
+    openSettingsAction: #selector(openSettings),
     quitApplicationAction: #selector(NSApplication.terminate(_:))
   )
   private var overlays = [NSWindow]()
 
   private var translator: Translator?
   private var service = TranslationService()
+
+#if canImport(Synchronization)
+  private var mainWindow: NSWindow?
+  var translationSession: TranslationSession? {
+    didSet {
+      guard let _ = translationSession else { return }
+      guard mainWindow == nil else { return }
+      for window in NSApp.windows {
+        if window.className == "SwiftUI.AppKitWindow" {
+          window.titleVisibility = .hidden
+          window.titlebarAppearsTransparent = true
+
+          window.hasShadow = false
+
+          window.standardWindowButton(.closeButton)?.isHidden = true
+          window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+          window.standardWindowButton(.zoomButton)?.isHidden = true
+          window.ignoresMouseEvents = true
+
+          window.isOpaque = false
+          window.backgroundColor = .clear
+
+          window.setContentSize(.zero)
+          window.setFrameOrigin(.zero)
+
+          mainWindow = window
+        }
+      }
+    }
+  }
+#endif
 
   private var isTranslationEnabled = false {
     didSet {
@@ -26,6 +61,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   }
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
+    menuController.setup()
+    
     let trustedCheckOptionPrompt = kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString
     let options = [trustedCheckOptionPrompt: true] as CFDictionary
     if AXIsProcessTrustedWithOptions(options) {
@@ -45,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   }
 
   private func setup() {
-    Task {
+    Task { @MainActor in
       let sequence = NSWorkspace.shared.notificationCenter
         .notifications(named: NSWorkspace.didActivateApplicationNotification)
       for await notification in sequence {
@@ -56,6 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
           translator = DiscordTranslator(application: app)
         } else {
           translator = nil
+          isTranslationEnabled = false
         }
       }
     }
@@ -81,6 +119,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     isTranslationEnabled.toggle()
   }
 
+  @objc
+  private func openSettings() {
+    let openSettings = OpenSettings()
+    openSettings.openSettings()
+    NSApp.activate()
+  }
+
   private func translateMessages() {
     guard isTranslationEnabled else {
       return
@@ -98,7 +143,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         overlayWindow.leadingMargin = message.textFrame.minX - message.frame.minX
 
         Task { @MainActor in
-          overlayWindow.text = try await service.translate(text: message.text)
+          overlayWindow.text = try await service.translate(
+            session: translationSession,
+            text: message.text
+          )
         }
 
         overlayWindow.setFrameOrigin(message.frame.origin)

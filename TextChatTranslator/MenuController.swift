@@ -3,9 +3,10 @@ import AppKit
 
 class MenuController {
   let startTranslation: NSMenuItem
+  let openSettings: NSMenuItem
   let quitApplication: NSMenuItem
 
-  private let statusItem: NSStatusItem
+  private lazy var statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
   var isTranslationEnabled = false {
     didSet {
@@ -19,31 +20,39 @@ class MenuController {
     }
   }
 
-  init(startTranslationAction: Selector, quitApplicationAction: Selector) {
-    statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-    statusItem.button?.image = NSImage(named: "translator")
-
-    let menu = NSMenu()
-    statusItem.menu = menu
-
+  init(startTranslationAction: Selector, openSettingsAction: Selector, quitApplicationAction: Selector) {
     startTranslation = NSMenuItem(
       title: NSLocalizedString("Start Translation", comment: ""),
       action: startTranslationAction,
       keyEquivalent: ""
     )
-
     startTranslation.image = NSImage(named: "discord")
     startTranslation.onStateImage = NSImage(named: NSImage.statusAvailableName)
     startTranslation.offStateImage = NSImage(named: NSImage.statusNoneName)
-    menu.addItem(startTranslation)
 
-    menu.addItem(NSMenuItem.separator())
+    openSettings = NSMenuItem(
+      title: NSLocalizedString("Settings…", comment: ""),
+      action: openSettingsAction,
+      keyEquivalent: ","
+    )
 
     quitApplication = NSMenuItem(
       title: NSLocalizedString("Quit Text Chat Translator", comment: ""),
       action: quitApplicationAction,
       keyEquivalent: "q"
     )
+  }
+
+  func setup() {
+    let menu = NSMenu()
+
+    menu.addItem(startTranslation)
+    menu.addItem(NSMenuItem.separator())
+    menu.addItem(openSettings)
+    menu.addItem(NSMenuItem.separator())
     menu.addItem(quitApplication)
+
+    statusItem.button?.image = NSImage(named: "translator")
+    statusItem.menu = menu
   }
 }

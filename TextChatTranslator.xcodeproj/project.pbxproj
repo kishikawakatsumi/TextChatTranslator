@@ -12,12 +12,14 @@
 		146440092C2511AD000C148D /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146440082C2511AD000C148D /* MenuController.swift */; };
 		14C3D6592C1D86B000A24281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D6582C1D86B000A24281 /* AppDelegate.swift */; };
 		14C3D65D2C1D86B200A24281 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14C3D65C2C1D86B200A24281 /* Assets.xcassets */; };
-		14C3D6602C1D86B200A24281 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 14C3D65F2C1D86B200A24281 /* Base */; };
 		14C3D66B2C1D872600A24281 /* OverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D6672C1D872600A24281 /* OverlayWindow.swift */; };
 		14C3D66C2C1D872600A24281 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D6682C1D872600A24281 /* AXUIElement.swift */; };
 		14C3D66D2C1D872600A24281 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D6692C1D872600A24281 /* Debounce.swift */; };
 		14C3D66E2C1D872600A24281 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D66A2C1D872600A24281 /* TranslationService.swift */; };
 		14C3D6702C1DEFAA00A24281 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 14C3D66F2C1DEFAA00A24281 /* Localizable.xcstrings */; };
+		14C4B4672C2520AC00ABDD81 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4B4662C2520AA00ABDD81 /* App.swift */; };
+		14C4B46A2C2520C400ABDD81 /* TranslationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4B4692C2520C400ABDD81 /* TranslationContext.swift */; };
+		14C4B46B2C2520C400ABDD81 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4B4682C2520C400ABDD81 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,13 +29,15 @@
 		14C3D6552C1D86B000A24281 /* Text Chat Translator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Text Chat Translator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		14C3D6582C1D86B000A24281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14C3D65C2C1D86B200A24281 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		14C3D65F2C1D86B200A24281 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		14C3D6612C1D86B200A24281 /* TextChatTranslator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TextChatTranslator.entitlements; sourceTree = "<group>"; };
 		14C3D6672C1D872600A24281 /* OverlayWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayWindow.swift; sourceTree = "<group>"; };
 		14C3D6682C1D872600A24281 /* AXUIElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
 		14C3D6692C1D872600A24281 /* Debounce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		14C3D66A2C1D872600A24281 /* TranslationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
 		14C3D66F2C1DEFAA00A24281 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		14C4B4662C2520AA00ABDD81 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		14C4B4682C2520C400ABDD81 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		14C4B4692C2520C400ABDD81 /* TranslationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationContext.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,12 +78,22 @@
 				14C3D66A2C1D872600A24281 /* TranslationService.swift */,
 				14C3D6682C1D872600A24281 /* AXUIElement.swift */,
 				14C3D6692C1D872600A24281 /* Debounce.swift */,
+				14C4B46C2C2520D000ABDD81 /* macOS 15 */,
 				14C3D65C2C1D86B200A24281 /* Assets.xcassets */,
-				14C3D65E2C1D86B200A24281 /* Main.storyboard */,
 				14C3D6612C1D86B200A24281 /* TextChatTranslator.entitlements */,
 				14C3D66F2C1DEFAA00A24281 /* Localizable.xcstrings */,
 			);
 			path = TextChatTranslator;
+			sourceTree = "<group>";
+		};
+		14C4B46C2C2520D000ABDD81 /* macOS 15 */ = {
+			isa = PBXGroup;
+			children = (
+				14C4B4662C2520AA00ABDD81 /* App.swift */,
+				14C4B4682C2520C400ABDD81 /* SettingsView.swift */,
+				14C4B4692C2520C400ABDD81 /* TranslationContext.swift */,
+			);
+			path = "macOS 15";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,7 +156,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				14C3D65D2C1D86B200A24281 /* Assets.xcassets in Resources */,
-				14C3D6602C1D86B200A24281 /* Base in Resources */,
 				14C3D6702C1DEFAA00A24281 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,11 +167,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14C4B4672C2520AC00ABDD81 /* App.swift in Sources */,
 				146440092C2511AD000C148D /* MenuController.swift in Sources */,
 				14C3D66C2C1D872600A24281 /* AXUIElement.swift in Sources */,
 				146440052C250B44000C148D /* Translator.swift in Sources */,
 				14C3D66B2C1D872600A24281 /* OverlayWindow.swift in Sources */,
 				14C3D66D2C1D872600A24281 /* Debounce.swift in Sources */,
+				14C4B46A2C2520C400ABDD81 /* TranslationContext.swift in Sources */,
+				14C4B46B2C2520C400ABDD81 /* SettingsView.swift in Sources */,
 				146440072C250B4E000C148D /* DiscordTranslator.swift in Sources */,
 				14C3D6592C1D86B000A24281 /* AppDelegate.swift in Sources */,
 				14C3D66E2C1D872600A24281 /* TranslationService.swift in Sources */,
@@ -166,17 +182,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		14C3D65E2C1D86B200A24281 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				14C3D65F2C1D86B200A24281 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		14C3D6622C1D86B200A24281 /* Debug */ = {
@@ -313,8 +318,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMainStoryboardFile = Main;
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -345,8 +348,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMainStoryboardFile = Main;
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
