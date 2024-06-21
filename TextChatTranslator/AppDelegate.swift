@@ -4,47 +4,28 @@ private let debounce = Debounce(delay: 0.2)
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
-  private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-  private let translationMenuItem = NSMenuItem(
-    title: NSLocalizedString("Start Translation", comment: ""),
-    action: #selector(toggleTranslationEnabled), keyEquivalent: ""
+  private var menuController = MenuController(
+    startTranslationAction: #selector(toggleTranslationEnabled),
+    quitApplicationAction: #selector(NSApplication.terminate(_:))
   )
+  private var overlays = [NSWindow]()
 
   private var translator: Translator?
-  private var overlays = [NSWindow]()
+  private var service = TranslationService()
 
   private var isTranslationEnabled = false {
     didSet {
+      menuController.isTranslationEnabled = isTranslationEnabled
+
       if isTranslationEnabled {
         translateMessages()
-        translationMenuItem.title = NSLocalizedString("Stop Translation", comment: "")
-        translationMenuItem.state = .on
       } else {
         closeAllOverlays()
-        translationMenuItem.title = NSLocalizedString("Start Translation", comment: "")
-        translationMenuItem.state = .off
       }
     }
   }
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
-    statusItem.button?.image = NSImage(named: "translator")
-
-    let menu = NSMenu()
-
-    translationMenuItem.image = NSImage(named: "discord")
-    translationMenuItem.onStateImage = NSImage(named: NSImage.statusAvailableName)
-    translationMenuItem.offStateImage = NSImage(named: NSImage.statusNoneName)
-    menu.addItem(translationMenuItem)
-
-    menu.addItem(NSMenuItem.separator())
-    menu.addItem(NSMenuItem(
-      title: NSLocalizedString("Quit Text Chat Translator", comment: ""),
-      action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
-    )
-
-    statusItem.menu = menu
-
     let trustedCheckOptionPrompt = kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString
     let options = [trustedCheckOptionPrompt: true] as CFDictionary
     if AXIsProcessTrustedWithOptions(options) {
@@ -57,7 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   }
 
   func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-    if translationMenuItem === menuItem {
+    if menuController.startTranslation === menuItem {
       return translator != nil
     }
     return true
@@ -117,7 +98,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         overlayWindow.leadingMargin = message.textFrame.minX - message.frame.minX
 
         Task { @MainActor in
-          overlayWindow.text = try await translate(text: message.text)
+          overlayWindow.text = try await service.translate(text: message.text)
         }
 
         overlayWindow.setFrameOrigin(message.frame.origin)

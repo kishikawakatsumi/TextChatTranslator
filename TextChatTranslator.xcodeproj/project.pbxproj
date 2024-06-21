@@ -9,19 +9,21 @@
 /* Begin PBXBuildFile section */
 		146440052C250B44000C148D /* Translator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146440042C250B44000C148D /* Translator.swift */; };
 		146440072C250B4E000C148D /* DiscordTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146440062C250B4E000C148D /* DiscordTranslator.swift */; };
+		146440092C2511AD000C148D /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146440082C2511AD000C148D /* MenuController.swift */; };
 		14C3D6592C1D86B000A24281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D6582C1D86B000A24281 /* AppDelegate.swift */; };
 		14C3D65D2C1D86B200A24281 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14C3D65C2C1D86B200A24281 /* Assets.xcassets */; };
 		14C3D6602C1D86B200A24281 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 14C3D65F2C1D86B200A24281 /* Base */; };
 		14C3D66B2C1D872600A24281 /* OverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D6672C1D872600A24281 /* OverlayWindow.swift */; };
 		14C3D66C2C1D872600A24281 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D6682C1D872600A24281 /* AXUIElement.swift */; };
 		14C3D66D2C1D872600A24281 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D6692C1D872600A24281 /* Debounce.swift */; };
-		14C3D66E2C1D872600A24281 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D66A2C1D872600A24281 /* Translation.swift */; };
+		14C3D66E2C1D872600A24281 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3D66A2C1D872600A24281 /* TranslationService.swift */; };
 		14C3D6702C1DEFAA00A24281 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 14C3D66F2C1DEFAA00A24281 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		146440042C250B44000C148D /* Translator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translator.swift; sourceTree = "<group>"; };
 		146440062C250B4E000C148D /* DiscordTranslator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscordTranslator.swift; sourceTree = "<group>"; };
+		146440082C2511AD000C148D /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		14C3D6552C1D86B000A24281 /* Text Chat Translator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Text Chat Translator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		14C3D6582C1D86B000A24281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14C3D65C2C1D86B200A24281 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -30,7 +32,7 @@
 		14C3D6672C1D872600A24281 /* OverlayWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayWindow.swift; sourceTree = "<group>"; };
 		14C3D6682C1D872600A24281 /* AXUIElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
 		14C3D6692C1D872600A24281 /* Debounce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
-		14C3D66A2C1D872600A24281 /* Translation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
+		14C3D66A2C1D872600A24281 /* TranslationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
 		14C3D66F2C1DEFAA00A24281 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,10 +67,11 @@
 			isa = PBXGroup;
 			children = (
 				14C3D6582C1D86B000A24281 /* AppDelegate.swift */,
+				146440082C2511AD000C148D /* MenuController.swift */,
 				146440042C250B44000C148D /* Translator.swift */,
 				146440062C250B4E000C148D /* DiscordTranslator.swift */,
 				14C3D6672C1D872600A24281 /* OverlayWindow.swift */,
-				14C3D66A2C1D872600A24281 /* Translation.swift */,
+				14C3D66A2C1D872600A24281 /* TranslationService.swift */,
 				14C3D6682C1D872600A24281 /* AXUIElement.swift */,
 				14C3D6692C1D872600A24281 /* Debounce.swift */,
 				14C3D65C2C1D86B200A24281 /* Assets.xcassets */,
@@ -151,13 +154,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				146440092C2511AD000C148D /* MenuController.swift in Sources */,
 				14C3D66C2C1D872600A24281 /* AXUIElement.swift in Sources */,
 				146440052C250B44000C148D /* Translator.swift in Sources */,
 				14C3D66B2C1D872600A24281 /* OverlayWindow.swift in Sources */,
 				14C3D66D2C1D872600A24281 /* Debounce.swift in Sources */,
 				146440072C250B4E000C148D /* DiscordTranslator.swift in Sources */,
 				14C3D6592C1D86B000A24281 /* AppDelegate.swift in Sources */,
-				14C3D66E2C1D872600A24281 /* Translation.swift in Sources */,
+				14C3D66E2C1D872600A24281 /* TranslationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
