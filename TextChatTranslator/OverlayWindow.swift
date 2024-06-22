@@ -85,15 +85,18 @@ fileprivate class OverlayContentView: NSView {
 
   @AppStorage("backgroundColor") private var backgroundColor = Color.white
   @AppStorage("textColor") private var textColor = Color.black
+  @AppStorage("fontSize" )private var fontSize = 16
 
   private let textLabel = NSTextField(wrappingLabelWithString: "")
-  private let defaultFont: NSFont = .systemFont(ofSize: 16)
   var leadingMargin: CGFloat = 0 {
     didSet {
       leadingConstraint?.constant = leadingMargin
     }
   }
   private var leadingConstraint: NSLayoutConstraint?
+  private var preferredFont: NSFont {
+    NSFont.systemFont(ofSize: CGFloat(fontSize))
+  }
 
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
@@ -117,7 +120,7 @@ fileprivate class OverlayContentView: NSView {
     textLabel.translatesAutoresizingMaskIntoConstraints = true
     containerView.addSubview(textLabel)
 
-    textLabel.font = defaultFont
+    textLabel.font = preferredFont
     textLabel.textColor = NSColor(textColor)
     textLabel.backgroundColor = .clear
     textLabel.drawsBackground = false
@@ -137,7 +140,7 @@ fileprivate class OverlayContentView: NSView {
     containerSize.width -= leadingMargin
     containerSize.height = .greatestFiniteMagnitude
 
-    var font = defaultFont
+    var font = preferredFont
     var fontSize = font.pointSize
     var boundingRect: CGRect = .infinite
 

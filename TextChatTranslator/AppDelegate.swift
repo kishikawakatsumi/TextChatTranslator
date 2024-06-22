@@ -134,7 +134,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
   private func openSettings() {
     let openSettings = OpenSettings()
     openSettings.openSettings()
-    NSApp.activate()
+    NSApp.activate(ignoringOtherApps: true)
   }
 #endif
 

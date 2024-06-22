@@ -13,6 +13,7 @@ struct SettingsView: View {
 struct TranslationSettingsView: View {
   @AppStorage("backgroundColor") private var backgroundColor = Color.white
   @AppStorage("textColor" )private var textColor = Color.black
+  @AppStorage("fontSize" )private var fontSize = 16
 
   @AppStorage("sourceLanguage") private var sourceLanguage = "en-Latn-US"
   @AppStorage("targetLanguage") private var targetLanguage = "ja-Jpan-JP"
@@ -27,6 +28,12 @@ struct TranslationSettingsView: View {
     Form {
       ColorPicker("Background Color:", selection: $backgroundColor)
       ColorPicker("Text Color:", selection: $textColor)
+      Picker("Font Size:", selection: $fontSize) {
+        ForEach([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 28, 30, 32, 34, 36, 40, 44], id: \.self) { (size) in
+          Text("\(size) pt")
+            .tag(size)
+        }
+      }
 
       Divider()
         .padding(.vertical)
