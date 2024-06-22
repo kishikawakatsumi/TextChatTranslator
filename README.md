@@ -2,11 +2,19 @@
 
 Text Chat Translator is a simple application that translates text messages in real-time. It is designed to be used with chat applications like Discord, Slack, and others.
 
-https://github.com/kishikawakatsumi/TextChatTranslator/assets/40610/01e8104d-9a85-459c-8569-d2f5ebab6dc8
+https://github.com/kishikawakatsumi/TextChatTranslator/assets/40610/59902321-4a70-4373-aa75-adf418298cd1
 
 ## Features
 
 - Translate text messages in real-time
+
+## Usage
+
+<img width="715" alt="Permissions" src="https://github.com/kishikawakatsumi/TextChatTranslator/assets/40610/693d2ac4-8b3c-4ee0-ac21-15dcf1dda7f5">
+
+<img width="480" alt="Settings" src="https://github.com/kishikawakatsumi/TextChatTranslator/assets/40610/06afe909-cebb-42a7-82cd-3ecce045e400">
+
+<img width="618" alt="Install Translation" src="https://github.com/kishikawakatsumi/TextChatTranslator/assets/40610/8cee35a9-d2cf-4286-863d-c6d3826fda9e">
 
 ## Author
 
