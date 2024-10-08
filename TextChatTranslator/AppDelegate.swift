@@ -100,6 +100,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
         if activeApp.bundleIdentifier == "com.hnc.Discord" {
           let app = AXUIElementCreateApplication(activeApp.processIdentifier)
+          AXUIElementSetAttributeValue(app, "AXManualAccessibility" as CFString, kCFBooleanTrue)
+
           translator = DiscordTranslator(application: app)
         } else {
           translator = nil
