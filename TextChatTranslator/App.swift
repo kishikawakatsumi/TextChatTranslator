@@ -45,4 +45,3 @@ struct TextChatTranslatorApp: App {
   }
 }
 #endif
-
