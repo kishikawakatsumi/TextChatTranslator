@@ -20,6 +20,7 @@
 		14C4B4672C2520AC00ABDD81 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4B4662C2520AA00ABDD81 /* App.swift */; };
 		14C4B46A2C2520C400ABDD81 /* TranslationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4B4692C2520C400ABDD81 /* TranslationContext.swift */; };
 		14C4B46B2C2520C400ABDD81 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C4B4682C2520C400ABDD81 /* SettingsView.swift */; };
+		14F0911E2D0769150008A55A /* SlackTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F0911D2D0769100008A55A /* SlackTranslator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		14C4B4662C2520AA00ABDD81 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		14C4B4682C2520C400ABDD81 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		14C4B4692C2520C400ABDD81 /* TranslationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationContext.swift; sourceTree = "<group>"; };
+		14F0911D2D0769100008A55A /* SlackTranslator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlackTranslator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				14C4B4692C2520C400ABDD81 /* TranslationContext.swift */,
 				146440042C250B44000C148D /* Translator.swift */,
 				146440062C250B4E000C148D /* DiscordTranslator.swift */,
+				14F0911D2D0769100008A55A /* SlackTranslator.swift */,
 				14C3D6682C1D872600A24281 /* AXUIElement.swift */,
 				14C3D6692C1D872600A24281 /* Debounce.swift */,
 				14C3D65C2C1D86B200A24281 /* Assets.xcassets */,
@@ -116,7 +119,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					14C3D6542C1D86B000A24281 = {
 						CreatedOnToolsVersion = 15.3;
@@ -159,6 +162,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14F0911E2D0769150008A55A /* SlackTranslator.swift in Sources */,
 				14C4B4672C2520AC00ABDD81 /* App.swift in Sources */,
 				146440092C2511AD000C148D /* MenuController.swift in Sources */,
 				14C3D66C2C1D872600A24281 /* AXUIElement.swift in Sources */,
@@ -181,6 +185,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -210,6 +215,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -229,7 +235,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -244,6 +250,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -273,6 +280,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -286,7 +294,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -303,6 +311,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 27AEDK3C9F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -314,7 +323,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kishikawakatsumi.TextChatTranslator;
 				PRODUCT_MODULE_NAME = TextChatTranslator;
@@ -333,6 +341,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 27AEDK3C9F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -344,7 +353,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kishikawakatsumi.TextChatTranslator;
 				PRODUCT_MODULE_NAME = TextChatTranslator;

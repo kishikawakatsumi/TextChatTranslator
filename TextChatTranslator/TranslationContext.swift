@@ -1,9 +1,8 @@
-#if compiler(>=6.0)
+
 import SwiftUI
 import Translation
 
 @Observable
-@available(macOS 15.0, *)
 class TranslationContext {
   var configuration = {
     let userDefaults = UserDefaults.standard
@@ -18,8 +17,6 @@ class TranslationContext {
   var session: TranslationSession?
 }
 
-@available(macOS 15.0, *)
 extension EnvironmentValues {
   @Entry var translationContext = TranslationContext()
 }
-#endif

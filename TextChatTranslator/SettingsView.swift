@@ -1,15 +1,12 @@
 import SwiftUI
-#if compiler(>=6.0)
 import Translation
 
-@available(macOS 15, *)
 struct SettingsView: View {
   var body: some View {
     TranslationSettingsView()
   }
 }
 
-@available(macOS 15, *)
 struct TranslationSettingsView: View {
   @AppStorage("backgroundColor") private var backgroundColor = Color.white
   @AppStorage("textColor" )private var textColor = Color.black
@@ -17,7 +14,7 @@ struct TranslationSettingsView: View {
 
   @AppStorage("sourceLanguage") private var sourceLanguage = "en-Latn-US"
   @AppStorage("targetLanguage") private var targetLanguage = "ja-Jpan-JP"
-  
+
   @State private var supportedLanguages = [Locale.Language]()
   @State private var languageAvailability: String = ""
   @State private var needsInstallTranslation: Bool = false
@@ -116,9 +113,8 @@ struct TranslationSettingsView: View {
     )
   }
 }
-#endif
 
-extension Color: RawRepresentable {
+extension Color: @retroactive RawRepresentable {
   public init?(rawValue: String) {
     guard let data = Data(base64Encoded: rawValue) else {
       self = .black

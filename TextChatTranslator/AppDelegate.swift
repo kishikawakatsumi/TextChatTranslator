@@ -3,36 +3,21 @@ import Translation
 
 private let debounce = Debounce(delay: 0.2)
 
-#if compiler(>=6.0)
-@available(macOS 15.0, *)
-#endif
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
-#if compiler(>=6.0)
   private let menuController = MenuController(
     startTranslationAction: #selector(toggleTranslationEnabled),
     openSettingsAction: #selector(openSettings),
     quitApplicationAction: #selector(NSApplication.terminate(_:))
   )
-#else
-  private let menuController = MenuController(
-    startTranslationAction: #selector(toggleTranslationEnabled),
-    quitApplicationAction: #selector(NSApplication.terminate(_:))
-  )
-#endif
   private var overlays = [NSWindow]()
 
   private var translator: Translator?
   private var service = TranslationService()
 
   private var mainWindow: NSWindow?
-#if compiler(<6.0)
-  typealias TranslationSession = AnyObject
-#endif
   var translationSession: TranslationSession? {
     didSet {
-#if compiler(>=6.0)
       guard let _ = translationSession else { return }
-#endif
       guard mainWindow == nil else { return }
       for window in NSApp.windows {
         if window.className == "SwiftUI.AppKitWindow" {
@@ -103,7 +88,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
           AXUIElementSetAttributeValue(app, "AXManualAccessibility" as CFString, kCFBooleanTrue)
 
           translator = DiscordTranslator(application: app)
-        } else {
+        } else if activeApp.bundleIdentifier == "com.tinyspeck.slackmacgap" {
+          let app = AXUIElementCreateApplication(activeApp.processIdentifier)
+          AXUIElementSetAttributeValue(app, "AXManualAccessibility" as CFString, kCFBooleanTrue)
+
+          translator = SlackTranslator(application: app)
+        } else  {
           translator = nil
           isTranslationEnabled = false
         }
@@ -131,14 +121,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     isTranslationEnabled.toggle()
   }
 
-#if compiler(>=6.0)
   @objc
   private func openSettings() {
     let openSettings = OpenSettings()
     openSettings.openSettings()
     NSApp.activate(ignoringOtherApps: true)
   }
-#endif
 
   private func translateMessages() {
     guard isTranslationEnabled else {
@@ -157,16 +145,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         overlayWindow.leadingMargin = message.textFrame.minX - message.frame.minX
 
         Task { @MainActor in
-#if compiler(>=6.0)
           overlayWindow.text = try await service.translate(
             session: translationSession,
             text: message.text
           )
-#else
-          overlayWindow.text = try await service.translate(
-            text: message.text
-          )
-#endif
         }
 
         overlayWindow.setFrameOrigin(message.frame.origin)
