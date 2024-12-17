@@ -7,7 +7,7 @@ protocol Translator {
   func perform()
 }
 
-struct Message {
+struct Message: Hashable {
   let frame: CGRect
   let textFrame: CGRect
   let text: String

@@ -1,11 +1,8 @@
 import SwiftUI
-
-#if compiler(>=6.0)
 import Observation
 import Translation
 
 @main
-@available(macOS 15.0, *)
 struct TextChatTranslatorApp: App {
   @AppStorage("targetLanguage") private var targetLanguage = "ja"
 
@@ -15,9 +12,9 @@ struct TextChatTranslatorApp: App {
   var body: some Scene {
     WindowGroup {
       VStack {}
-      .translationTask(translationContext.configuration) { (session) in
-        appDelegate.translationSession = session
-      }
+        .translationTask(translationContext.configuration) { (session) in
+          appDelegate.translationSession = session
+        }
     }
     Settings {
       SettingsView()
@@ -26,22 +23,6 @@ struct TextChatTranslatorApp: App {
   }
 }
 
-@available(macOS 15.0, *)
 struct OpenSettings {
   @Environment(\.openSettings) var openSettings
 }
-#else
-@main
-struct TextChatTranslatorApp: App {
-  @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-  
-  var body: some Scene {
-    WindowGroup {
-      VStack {}
-        .onAppear {
-          appDelegate.translationSession = nil
-        }
-    }
-  }
-}
-#endif
