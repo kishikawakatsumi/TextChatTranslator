@@ -4,6 +4,8 @@ Text Chat Translator is a simple application that translates text messages in re
 
 https://github.com/kishikawakatsumi/TextChatTranslator/assets/40610/59902321-4a70-4373-aa75-adf418298cd1
 
+https://github.com/user-attachments/assets/0f25cb29-0a76-4fe2-8cc6-560b9a0cbc4b
+
 ## Features
 
 - Translate text messages in real-time
