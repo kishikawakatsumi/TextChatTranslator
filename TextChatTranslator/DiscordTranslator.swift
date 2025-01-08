@@ -25,7 +25,38 @@ class DiscordTranslator: Translator {
       .filter { $0.role == kAXGroupRole }
     for rowContainer in rowContainers {
       for row in rowContainer.children {
-        guard row.roleDescription == "message" else {
+        guard [
+          "besked",
+          "nachricht",
+          "message",
+          "mensaje",
+          "enviar mensaje",
+          "message",
+          "poruka",
+          "messaggio",
+          "pranešimas",
+          "üzenet",
+          "bericht",
+          "melding",
+          "wiadomość",
+          "mensagem",
+          "mesaj",
+          "viesti",
+          "meddelande",
+          "tin nhắn",
+          "mesaj",
+          "zpráva",
+          "μήνυμα",
+          "съобщение",
+          "сообщение",
+          "повідомлення",
+          "मैसेज",
+          "ข้อความ",
+          "消息",
+          "メッセージ",
+          "傳送訊息",
+          "메시지",
+        ].contains(row.roleDescription) else {
           continue
         }
 
@@ -61,7 +92,39 @@ class DiscordTranslator: Translator {
           return messageList
         }
       }
-      if child.roleDescription == "content list" && child.description.starts(with: "Messages") {
+
+      if child.roleDescription == "content list" && (
+        child.description.starts(with: "Beskeder i") ||
+        child.description.starts(with: "Nachrichten in") ||
+        child.description.starts(with: "Messages") ||
+        child.description.starts(with: "Mensajes en") ||
+        child.description.starts(with: "Mensajes en") ||
+        child.description.starts(with: "Messages sur") ||
+        child.description.starts(with: "Poruke u kanalu") ||
+        child.description.starts(with: "Messaggi in") ||
+        child.description.starts(with: "Žinutės kanale") ||
+        child.description.starts(with: "Üzenetek itt:") ||
+        child.description.starts(with: "Berichten in") ||
+        child.description.starts(with: "Meldinger på") ||
+        child.description.starts(with: "Wiadomości w") ||
+        child.description.starts(with: "Mensagens em") ||
+        child.description.starts(with: "Mesaje pe") ||
+        child.description.starts(with: "Kanavan") ||
+        child.description.starts(with: "Meddelanden i") ||
+        child.description.starts(with: "Tin nhắn trong") ||
+        child.description.hasSuffix("kanalından mesaj var") ||
+        child.description.starts(with: "Zprávy v kanálu") ||
+        child.description.starts(with: "Μηνύματα στο") ||
+        child.description.starts(with: "Съобщения в") ||
+        child.description.starts(with: "Сообщения на") ||
+        child.description.starts(with: "Повідомлення в каналі") ||
+        child.description.hasSuffix("में मैसेज") ||
+        child.description.starts(with: "ข้อความใน") ||
+        child.description.hasSuffix("中的消息") ||
+        child.description.hasSuffix("メッセージ") ||
+        child.description.hasSuffix("中的訊息") ||
+        child.description.hasSuffix("의 메시지")
+      ) {
         return child
       }
     }
