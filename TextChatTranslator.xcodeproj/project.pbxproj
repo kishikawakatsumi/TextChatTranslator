@@ -323,7 +323,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kishikawakatsumi.TextChatTranslator;
 				PRODUCT_MODULE_NAME = TextChatTranslator;
 				PRODUCT_NAME = "Text Chat Translator";
@@ -353,7 +353,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kishikawakatsumi.TextChatTranslator;
 				PRODUCT_MODULE_NAME = TextChatTranslator;
 				PRODUCT_NAME = "Text Chat Translator";
